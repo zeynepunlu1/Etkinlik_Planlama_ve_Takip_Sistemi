@@ -1,0 +1,1133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+    margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; text-decoration: none; transition: all 0.3s ease;
+}
+
+body { background-color: #fcfcfc; color: #2c3e50; }
+
+.header {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 1200px;
+    background: rgba(255, 255, 255, 0.95); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center;
+    border-radius: 50px; box-shadow: 0 10px 30px rgba(234, 84, 85, 0.15); z-index: 1000; border: 1px solid rgba(234, 84, 85, 0.1); 
+}
+
+.logo { font-size: 24px; font-weight: 700; color: #ea5455; display: flex; align-items: center; gap: 10px; flex: 1; }
+.navbar { display: flex; align-items: center; gap: 30px; justify-content: center; flex: 2; }
+.navbar a { color: #636e72; font-weight: 500; font-size: 15px; position: relative; padding: 5px 0; white-space: nowrap; }
+.navbar a:hover, .navbar a.active { color: #ea5455; }
+.navbar a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: #ea5455; border-radius: 5px; }
+.navbar a:hover::after, .navbar a.active::after { width: 100%; }
+
+.header-action { display: flex; justify-content: flex-end; flex: 1; }
+.nav-btn { background: #ea5455; color: white !important; padding: 10px 24px; border-radius: 25px; font-weight: 500; font-size: 14px; white-space: nowrap; }
+.nav-btn:hover { background: #2d3436; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: translateY(-1px); }
+
+.Anasayfa {
+    min-height: 80vh; display: flex; align-items: center; padding: 0 10%; 
+    background: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0.4)), 
+    url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1920') no-repeat center center/cover;
+    padding-top: 120px;
+}
+
+.content { max-width: 600px; }
+.content h3 { font-size: 42px; font-weight: 700; color: #ea5455; line-height: 1.2; margin-bottom: 20px; }
+.content p { font-size: 16px; color: #2d3436; line-height: 1.6; margin-bottom: 30px; }
+.btn {
+    display: inline-flex; align-items: center; gap: 10px; background: #2bcbba; color: white; 
+    padding: 14px 30px; border-radius: 30px; font-weight: 600; box-shadow: 0 5px 15px rgba(43, 203, 186, 0.4); 
+}
+.btn:hover { background: #20bf6b; transform: translateY(-2px); }
+
+.ekstra-bolumler { padding: 60px 10%; background: #f8f9fa; }
+
+.kupon-kutusu {
+    background: linear-gradient(135deg, #2d3436, #1e272e); color: white; padding: 30px 40px; 
+    border-radius: 25px; display: flex; justify-content: space-between; align-items: center; 
+    flex-wrap: wrap; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+}
+.kupon-sol { display: flex; align-items: center; gap: 20px; }
+.kupon-sol h4 { font-size: 20px; color: #2bcbba; }
+.kod-alani { 
+    border: dashed 2px #2bcbba; padding: 10px 25px; font-weight: 700; letter-spacing: 2px; 
+    color: #2bcbba; border-radius: 10px; font-size: 18px; 
+}
+
+.footer { background: #2d3436; color: #b2bec3; text-align: center; padding: 20px; font-size: 14px; }
+/* index bitiş */
+
+/*hakkımızda başlangıç*/
+.hakkimizda-sayfasi {
+    padding: 160px 10% 80px 10%; /* Üst boşluk*/
+    background: #fdfdfd;
+    min-height: 85vh; /* Sayfa içeriği az olsa bile footerı en altta tutar*/
+}
+
+.hakkimizda-container {
+    max-width: 1100px;
+    margin: 0 auto; /* Kutuyu sağdan ve soldan otomatik olarak tam ortalar */
+}
+
+/* Görsel */
+.hakkimizda-giriş-yeni {
+    display: flex; /* Resmi ve yazıyı yan yana hizalar*/
+    align-items: center; /* Dikeyde tam ortalar*/
+    gap: 50px; /* Resim ile yazı arasındaki boşluk*/
+    margin-bottom: 60px; /* Alttakilerle arasındaki boşluk*/
+    flex-wrap: wrap; /* Mobil cihazlarda veya ekran küçülürse alt alta getirir */
+}
+
+/* Resim Kutusu ve Zoom Efekti */
+.hakkimizda-gorsel-kutusu {
+    flex: 1; /* Yanındaki yazı kutusuyla ekranı eşit oranda paylaşır */
+    min-width: 320px; /* Ekran küçüldüğünde resmin düşeceği minimum genişlik */
+    height: 400px; 
+    border-radius: 25px; /* Kutunun köşelerini ovalleştirir */
+    overflow: hidden; /* İleride resim büyüdüğünde köşelerden dışarı taşmasını engeller */
+    box-shadow: 0 15px 35px rgba(234, 84, 85, 0.15); /* Gölge derinliği */
+}
+
+.hakkimizda-gorsel-kutusu img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Resim kutuyu tam doldursun */
+    object-position: center bottom; /* Görsel net görünsün diye resmi alta hizalar */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Zoom hareketi için özel zamanlama */
+}
+/*resmin üzerine gelindiğinde*/
+.hakkimizda-gorsel-kutusu:hover img {
+    transform: scale(1.04); /* Resmi orijinal boyutundan %4 daha büyük yapar*/
+}
+
+/* Sağdaki Yazı Alanı */
+.hakkimizda-yazi-kutusu {
+    flex: 1; /* Yanındaki resim kutusuyla ekranı eşit oranda paylaşır */
+    min-width: 320px; /* Ekran küçüldüğünde yazının daralacağı minimum sınır */
+}
+/*Ana Başlık*/
+.hakkimizda-yazi-kutusu h3 {
+    font-size: 38px;
+    color: #ea5455;
+    margin-bottom: 20px;
+    font-weight: 700; /* Yazıyı kalın yapar */
+}
+/*İlk paragraf*/
+.hakkimizda-yazi-kutusu .vurgulu-yazi {
+    font-size: 17px;
+    line-height: 1.7; /* Satırların birbirine yapışmaması için dikey satır aralığı */
+    color: #2d3436;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+/*İkinci paragraf*/
+.hakkimizda-yazi-kutusu .ek-yazi {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #636e72;
+}
+
+/* misyon-vizyon-değerler kutuları*/
+.hakkimizda-kartlar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));/* Ekran boyutuna göre yan yana otomatik 3'lü veya 2'li dizer */
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.hakkimizda-kart {
+    background: white;
+    padding: 40px 30px; /*İç boşluk */
+    border-radius: 24px;
+    text-align: center; /* Kartın içindeki başlık, ikon ve yazıları ortalar */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(234, 84, 85, 0.05); /* Kartın etrafındaki çizgi */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; /* Zıplama efekti hız ayarı */
+}
+/* Kartın üzerinde gelindiğinde zıplama efekti */
+.hakkimizda-kart:hover {
+    transform: translateY(-10px); /* Kartı 10 piksel yukarı doğru fırlatır */
+    box-shadow: 0 20px 40px rgba(234, 84, 85, 0.12); /* Kart yukarı kalkınca altındaki gölgeyi koyulaştırır */
+}
+/* İkonların içinde durduğu daireler */
+.kart-ikon-çemberi {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* İkonu yatayda tam ortalar */
+    margin: 0 auto 20px auto;
+    font-size: 24px;
+}
+/* Kart ikonlarının arka plan renkleri ve ikon renkleri */
+.misyon-renk { background: rgba(234, 84, 85, 0.1); color: #ea5455; }
+.vizyon-renk { background: rgba(43, 203, 186, 0.1); color: #2bcbba; }
+.deger-renk { background: rgba(9, 132, 227, 0.1); color: #0984e3; }
+/* Kartların içindeki küçük alt başlıklar */
+.hakkimizda-kart h4 {
+    font-size: 22px;
+    color: #2d3436;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+/* Kartların içindeki paragraflar*/
+.hakkimizda-kart p {
+    font-size: 14px;
+    color: #636e72;
+    line-height: 1.6;
+}
+
+/* İletişim Yönlendirme Bandı*/
+.hakkimizda-iletisim-bandi {
+    background: linear-gradient(135deg, #2d3436, #1e272e); /* Soldan sağa koyu bir renk geçişi */
+    padding: 35px 40px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between; /* Yazı bloğunu en sola, butonu en sağa fırlatır */
+    align-items: center;
+    flex-wrap: wrap; /* Ekran daralırsa butonu otomatik olarak yazının altına indirir */
+    gap: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+/* Bandın içindeki başlık */
+.iletisim-bandi-icerik h4 {
+    font-size: 22px;
+    color: #2bcbba;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+/* Bandın içindeki açıklama yazısı */
+.iletisim-bandi-icerik p { color: #b2bec3; font-size: 15px; }
+
+/* İletişim sayfasına yönlendiren buton */
+.band-btn {
+    background: #ea5455;
+    color: white !important; /*important:diğer kodların rengi değiştirmesini engeller*/
+    padding: 14px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(234, 84, 85, 0.3);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+/* Butonun üzerine gelindiğinde */
+.band-btn:hover {
+    background: #ff6b6b;
+    transform: translateY(-4px); /* Butonu havaya doğru 4 piksel zıplatır */
+    box-shadow: 0 10px 20px rgba(234, 84, 85, 0.4);
+}
+/* Butonun içindeki ok işareti */
+.band-btn i { transition: transform 0.2s ease; }/* Okun sağa doğru kayma hareketi */
+.band-btn:hover i { transform: translateX(5px); }/* Butona dokunulduğunda içindeki oku 5 piksel sağa doğru kaydırır*/
+/*hakkımızda bitiş*/
+
+/*iletişim başlangıç */
+.iletisim-sayfasi {
+    padding: 140px 10% 60px 10%;
+    background: #f8f9fa;
+    min-height: 85vh;
+}
+/* Sol taraftaki bilgileri ve sağ taraftaki formu yan yana dizen ana kutu */
+.iletisim-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid; /* Sol bilgi ve sağ form alanını yan yana 2 sütun yapar */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Ekran daralırsa formu otomatik alta kaydırır */
+    gap: 50px;
+    align-items: center;
+}
+/* Soldaki ana başlık */
+.iletisim-bilgi h3 {
+    font-size: 36px;
+    color: #ea5455;
+    margin-bottom: 15px;
+}
+/* Soldaki açıklama metni */
+.iletisim-bilgi p {
+    color: #636e72;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+/* İletişim satırlarını tutan liste kutusu */
+.bilgi-listesi {
+    display: flex;
+    flex-direction: column; /* İletişim maddelerinin alt alta dizilmesini sağlar */
+    gap: 20px;
+}
+/* Tek bir iletişim satırı (ikon + yazı) */
+.bilgi-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+    color: #2d3436;
+}
+/* İletişim satırlarındaki ikonlar */
+.bilgi-item i {
+    color: #2bcbba;
+    font-size: 20px;
+    width: 30px;
+}
+
+/* Form Kutusu */
+.iletisim-form-kutusu {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+}
+/*Formun içindeki üst başlık*/
+.iletisim-form-kutusu h4 {
+    font-size: 22px;
+    color: #2d3436;
+    margin-bottom: 20px;
+}
+/* Her bir input ve textarea alanını saran alt kutu */
+.input-grup {
+    margin-bottom: 15px;
+}
+/* Formun içindeki yazı yazılan tüm kutular*/
+.input-grup input, 
+.input-grup textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd; /*solid:düz çerçeve*/
+    border-radius: 12px;
+    outline: none;/* Tarayıcıların varsayılan olarak etrafına koyduğu odaklanma halkasını kaldırır*/
+    font-size: 14px;
+}
+/* Kullanıcının bir kutunun içine yazı yazmak için tıkladığı an */
+.input-grup input:focus, 
+.input-grup textarea:focus {
+    border-color: #ea5455;
+}
+/*Gönderme butonu */
+.btn-gonder {
+    background: #ea5455;
+    color: white;
+    border: none;/* Butonun etrafındaki varsayılan çizgileri siler */
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-weight: 600;
+    cursor: pointer; /* Fare butonun üzerine geldiğinde el işaretine dönüşür */
+    display: inline-flex;/* Buton yazısı ile ikonu yan yana hizalar*/
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+}
+/*Butonun üzerine gelindiğinde */
+.btn-gonder:hover {
+    background: #2d3436;
+    transform: translateY(-1px);
+}
+/*iletişim bitiş*/
+
+/*giriş başlangıç*/
+
+:root {
+    --primary-color: #ea5455;   /* Sitenin ana rengi*/
+    --primary-hover: #ff6b6b;   /* Üzerine gelindiğinde kullanılacak açık ton */ 
+    --primary-dark: #b83b3c;    /* Üzerine gelindiğinde kullanılacak koyu ton */
+    --dark-color: #2d3436;
+    --bg-body: #f5f7fa;
+    --white: #ffffff;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /*fareyle üzerine gelinidğinde renk birden değişmesin diye verilen geçiş süresi*/
+}
+
+* { /* * etiketi sayfadaki tüm html etiketlerini seçer*/
+    margin: 0; /* dış boşluk sıfırlama */
+    padding: 0; /* iç boşluk sıfırlama */
+    box-sizing: border-box; /*kutu boyutunu sabitler*/ 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    min-height: 100vh; /*Sitenin gövde yüksekliğinin, kullanıcının ekranının tamamını kaplamasını zorunlu kılar. 100vh demek, ekranın dikeyde %100'ü demektir. Başına min ekleyerek de sayfaya eklenen form çok küçük olsa bile yukarı doğru taşınmasını engellemiş, footerın hep sayfanınn en altında kalmasını sağlamış oluyoruz */
+    display: flex; /*Gövdenin içindeki tüm ana elemanları (Header, Main, Footer vb.) hizalamak için*/
+    flex-direction: column; /* elemanları yukardan aşağıya dizer */
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between; /* içerideki ilk elemanı yani logoyu en sola, en sondaki elemanı yani giriş yap butonunu da en sağa yerleştirir. Ortada kalan elemanları da (Menü Linkleri) aradaki boşluğa dengeli bir şekilde yerleştir.*/
+    align-items: center; /*dikey merkeze alınmasını sağlar*/
+    padding: 20px 8%; /* ilk sayı üst ve alt 2. sayı sağ ve sol kenarlardan iç boşluk bırakır */
+    background-color: var(--white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    width: 100%; /*Bu üst şeridin ekranı yatay eksende uçtan uca %100 kaplamasını sağlar.*/
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none; /* logoyu htmlde a etiketi ile yazdık.Tarayıcılar varsayılan olarak tüm linklerin altını çizer. Bu satır, logonun altında çıkacak  alt çizgiyi siler. */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* takvim ikonu ile logo arasındaki boşluk */
+}
+
+.navbar a {
+    font-size: 16px;
+    color: #555;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar a:hover, .navbar a.active {
+    color: var(--primary-color);
+}
+
+.header-action .nav-btn { /* giriş yap kaydol butonu */
+    background: var(--primary-color); 
+    color: var(--white);              
+    border: 2px solid var(--primary-color); /* 2px kalınlığında düz bir çerçeve çizer */
+    padding: 10px 22px;
+    border-radius: 50px; /*köşeleri ovalleştirir */
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.header-action .nav-btn:hover {
+    background: var(--primary-dark);  
+    border-color: var(--primary-dark);
+    color: var(--white);              
+    box-shadow: none;                 
+}
+
+
+.auth-container {
+    flex: 1;
+    display: flex;
+    align-items: center; /*dikeyde ortalar*/
+    justify-content: center; /*yatayda ortalar*/
+    padding: 40px 20px;
+}
+
+.auth-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 450px; /*Kartın yatayda büyüyebileceği son sınırı çizer.*/
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(234, 84, 85, 0.08);
+    border: 1px solid rgba(234, 84, 85, 0.05);
+    position: relative; /*Bu kartı kendi içinde yer alacak diğer hareketli elemanlar için bir referans noktası yapar.*/
+    overflow: hidden; /*Kartın içine yazılan animasyonların, form geçişlerinin veya arka plan efektlerinin dışarıya taşmasını engeller. */
+}
+
+/* Seçim Sekmeleri */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 30px; /*alt dış boşluk*/
+    border-bottom: 2px solid #eee; /*Sekme butonlarının altına 2 px kalınlığında düz ve gri renkte bir taban çizgisi çizer. */
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #b2bec3;
+    cursor: pointer; /*üzerine gelindiğinde tıklanabilir olduğunu gösterir.*/
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    margin-bottom: -2px;
+}
+
+/* Formların Gizlenme/Gösterilme Animasyonu */
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block; /*Formu ekranda görünür hale getirir. */
+    animation: authFadeIn 0.5s ease;
+}
+
+@keyframes authFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-form h2 {
+    font-size: 26px;
+    color: var(--dark-color);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.auth-form .form-subtitle {
+    font-size: 14px;
+    color: #636e72;
+    margin-bottom: 25px;
+}
+
+/* İnput Alanları */
+.input-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group i {
+    position: absolute; /*ikonu bağımsız hale getirmek için */
+    left: 15px;
+    top: 50%; /*İkonun tepe noktasını, giriş kutusunun tam ortasına hizalamak için yukarıdan %50 aşağıya indirir.*/
+    transform: translateY(-50%);
+    color: #b2bec3;
+    transition: all 0.3s ease;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    background: #fdfdfd;
+    font-size: 15px;
+    color: var(--dark-color);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group select {
+    appearance: none;
+    cursor: pointer;
+}
+
+.input-group input:focus, .input-group select:focus { /* Virgül CSS'te "veya" anlamına gelir. Tarayıcıya şu emri verir: ".input-group içindeki yazı kutularına veya açılır menülere tıklandığı anda bu stilleri çalıştır."*/
+    border-color: var(--primary-color);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(234, 84, 85, 0.1);
+}
+
+.input-group input:focus + i, .input-group select:focus + i { /*CSS'te artı işareti, "bir elemanın hemen ardından gelen ilk kardeş elemanı seç" demektir.*/
+    color: var(--primary-color);
+}
+
+/* Seçenekler Satırı */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #636e72;
+    cursor: pointer;
+}
+
+.remember-me input {
+    accent-color: var(--primary-color);
+    width: 16px;
+    height: 16px;
+}
+
+.forgot-pass {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-pass:hover {
+    text-decoration: underline;
+}
+
+
+.auth-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.auth-btn:hover {
+    background: var(--primary-dark);
+}
+
+/*giriş bitiş*/
+
+
+/*etkinlik  ve detay başlangıç*/
+.discover-container {
+    flex: 1;
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    gap: 30px;
+}
+
+/* Sol Filtre Paneli */
+.filter-sidebar {
+    width: 280px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    height: fit-content;
+}
+
+.filter-sidebar h3 {
+    font-size: 18px;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #b2bec3;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.filter-btn {
+    width: 100%;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    color: #636e72;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+/* Sağ Taraf Etkinlik Havuzu */
+.events-feed {
+    flex: 1;
+}
+
+.feed-header {
+    margin-bottom: 25px;
+}
+
+.feed-header h2 {
+    font-size: 28px;
+    color: var(--dark-color);
+}
+
+.feed-header p {
+    color: #636e72;
+    font-size: 15px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Etkinlik Kart Tasarımı */
+.event-card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.02);
+    border: 1px solid #f1f2f6;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-image-placeholder {
+    height: 160px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b2bec3;
+}
+
+.card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.category-badge {
+    background: rgba(234, 84, 85, 0.1);
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    width: fit-content;
+    margin-bottom: 12px;
+}
+
+.event-card h4 {
+    font-size: 18px;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.event-info {
+    font-size: 13px;
+    color: #636e72;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.details-btn {
+    margin-top: auto;
+    padding-top: 15px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.details-btn:hover {
+    color: var(--primary-dark);
+}
+
+/*  DETAY SAYFASI EKSTRA KODLARI */
+.detail-container {
+    flex: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.detail-wrapper {
+    display: flex;
+    gap: 30px;
+}
+
+.detail-main {
+    flex: 2;
+}
+
+.detail-hero-banner {
+    height: 260px;
+    background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 20px;
+    text-align: center;
+}
+
+.detail-info-box {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.detail-info-box h3 {
+    margin-bottom: 15px;
+    color: var(--dark-color);
+}
+
+.detail-info-box p {
+    color: #636e72;
+    line-height: 1.6;
+}
+
+.detail-meta-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.meta-item {
+    flex: 1;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+}
+
+.meta-item i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+/* Sağ Bilet Alma Alanı */
+.ticket-sidebar {
+    flex: 1;
+    min-width: 350px;
+}
+
+.purchase-card {
+    background: var(--white);
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(234, 84, 85, 0.05);
+    border: 1px solid rgba(234, 84, 85, 0.05);
+}
+
+.status-badge {
+    background: #2ecc71;
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.price-section {
+    margin: 25px 0;
+}
+
+.price-section small {
+    color: #b2bec3;
+    display: block;
+}
+
+.price-section h2 {
+    font-size: 36px;
+    color: var(--dark-color);
+    margin: 5px 0;
+}
+
+.coupon-tip {
+    font-size: 13px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.summary-list {
+    border-top: 1px solid #f1f2f6;
+    padding-top: 20px;
+    margin-bottom: 25px;
+}
+
+.summary-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.summary-item i {
+    color: #636e72;
+    margin-top: 3px;
+}
+
+.buy-now-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s ease;
+}
+
+.buy-now-btn:hover {
+    background: var(--primary-dark);
+}
+
+.secure-text {
+    font-size: 11px;
+    color: #b2bec3;
+    text-align: center;
+    margin-top: 15px;
+    line-height: 1.4;
+}
+
+#eventSearchInput:focus {
+    border-color: var(--primary-color) !important;
+    background: var(--white) !important;
+    box-shadow: 0 0 0 4px rgba(234, 84, 85, 0.1) !important;
+}
+
+ /*etkinlik ve detay bitiş*/
+
+/* profil başlangıç*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f1f2f6;
+    color: #2d3436;
+    padding: 20px;
+}
+
+.discover-container {
+    display: flex;
+    max-width: 1300px;
+    margin: 40px auto 0 auto;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.filter-sidebar {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.profile-sidebar {
+    width: 350px;
+    flex-shrink: 0;
+}
+
+.profile-avatar-circle {
+    width: 80px;
+    height: 80px;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+}
+
+.profile-name {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.category-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.profile-role-badge {
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.profile-hr {
+    border: 0;
+    border-top: 1px solid #f1f2f6;
+    margin: 20px 0;
+}
+
+.event-info {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.profile-info-line {
+    margin-bottom: 12px;
+}
+
+.profile-discount-text {
+    background: rgba(234, 84, 85, 0.1);
+    color: #ea5455;
+    font-weight: bold;
+}
+
+.fin-summary-card {
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.fin-card-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.fin-card-value {
+    margin: 5px 0 0 0;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.events-feed {
+    width: 100%;
+}
+
+.feed-header {
+    margin-bottom: 25px;
+}
+
+.feed-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.feed-header p {
+    color: #636e72;
+    font-size: 14px;
+}
+
+.events-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.profile-feed-grid {
+    grid-template-columns: 1fr;
+}
+
+.event-card {
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease;
+    display: flex;
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+}
+
+.profile-list-card {
+    flex-direction: row;
+    padding: 20px;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-icon-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    height: 60px;
+}
+
+.admin-comment-border {
+    border-left: 5px solid #fdcb6e;
+}
+
+.admin-comment-text {
+    margin: 8px 0 0 0;
+    font-style: italic;
+    color: #636e72;
+    font-size: 14px;
+}
+
+.admin-rating-stars {
+    font-weight: 700;
+    color: #fdcb6e;
+}
+
+
+body {
+    overflow-y: auto !important; /* Kaydırma çubuğunu (scrollbar) geri getiren kritik kod */
+    min-height: 100vh;
+    padding-top: 120px !important; /* Profilin menünün altında kalmasını engeller */
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%) !important;
+}
+
+header.header {
+    position: fixed !important;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1300px;
+    z-index: 9999 !important; /* Her şeyin en üstünde kalmasını sağlar */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Profil alanındaki Grid düzenini koruma altına alıyoruz */
+.discover-container {
+    margin-top: 20px !important;
+    align-items: flex-start !important;
+}
+/* profil bitiş */
+
+/* DİNAMİK GİRİŞ YAPMIŞ KULLANICI BUTON STİLİ */
+.user-logged-in-btn {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a55eea 100%) !important; /* Muhteşem Kurumsal Mor/İndigo */
+    color: white !important;
+    font-weight: 700 !important;
+    border-radius: 30px !important; /* Yumuşak oval modern buton */
+    padding: 10px 22px !important;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.25) !important;
+    transition: all 0.3s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px; /* İkon ile isim arasındaki boşluk */
+}
+
+.user-logged-in-btn:hover {
+    transform: translateY(-2px) !important; /* Üzerine gelince hafif yukarı zıplama efekti */
+    box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4) !important;
+    filter: brightness(1.1);
+}
+
+.user-logged-in-btn i {
+    font-size: 16px;
+}

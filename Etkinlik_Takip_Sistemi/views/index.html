@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Takip Sistemi | SYNAPZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+
+    <header class="header"> 
+        <a href="index.html" class="logo">
+            <i class="fa-regular fa-calendar-check"></i> SYNAPZ
+        </a>
+        
+        <nav class="navbar">
+            <a href="index.html" class="active">Anasayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+        </nav>
+
+        <div class="header-action">
+            <a href="giris_kayit.html" id="girisLink" class="nav-btn">Giriş Yap/Kaydol</a>
+        </div>
+    </header>
+
+    <section class="Anasayfa">
+        <div class="content">
+            <h3>EĞLENCELİ ETKİNLİKLERİN ADRESİNE HOŞ GELDİNİZ</h3>
+            <p>
+                Şehrindeki en popüler konserler, tiyatrolar, stand-up gösterileri ve 
+                kampüs içi kulüp etkinlikleri burada seni bekliyor. 
+                Planını yap, biletini al ve anın keyfini çıkar.
+            </p>
+            <a href="etkinlikler.html" class="btn"> Etkinlikleri Keşfedin
+                <i class="fa-solid fa-ticket btn-icon"></i>
+            </a>
+        </div>
+    </section>
+
+    <section class="ekstra-bolumler">
+        <div class="container">
+            <div class="kupon-kutusu">
+                <div class="kupon-sol">
+                    <i class="fa-solid fa-graduation-cap fa-3x"></i>
+                    <div>
+                        <h4>Öğrencilere İlk Bilette %20 İndirim!</h4>
+                        <p>Kampüs e-postan ile kaydol, anında indirim kodunu kap.</p>
+                    </div>
+                </div>
+                <div class="kupon-sag">
+                    <span class="kod-alani">KAMPUS20</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Etkinlik Takip Sistemi. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loggedInID = localStorage.getItem('synapz_user_id');
+            const loggedInName = localStorage.getItem('synapz_user_name');
+            
+            if (loggedInID && loggedInName) {
+                const girisLink = document.getElementById('girisLink');
+                if (girisLink) {
+                    const kısaIsim = loggedInName.split(' ')[0];
+                    girisLink.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${kısaIsim}`;
+                    girisLink.href = `profil.html?id=${loggedInID}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

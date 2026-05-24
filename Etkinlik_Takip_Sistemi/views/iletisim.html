@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - SYNAPZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+
+    <header class="header"> 
+        <a href="index.html" class="logo">
+            <i class="fa-regular fa-calendar-check"></i> SYNAPZ
+        </a>
+        <nav class="navbar">
+            <a href="index.html">Anasayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html" class="active">İletişim</a>
+        </nav>
+        <div class="header-action">
+            <a href="giris_kayit.html" id="girisLink" class="nav-btn">Giriş Yap/Kaydol</a>
+        </div>
+    </header>
+
+    <section class="iletisim-sayfasi">
+        <div class="iletisim-container">
+            
+            <div class="iletisim-bilgi">
+                <h3>Bizimle İletişime Geçin 📞</h3>
+                <p>Proje hakkında sorularınız, destek talepleriniz veya iş ortaklığı fikirleriniz için bize dilediğiniz zaman ulaşabilirsiniz.</p>
+                
+                <div class="bilgi-listesi">
+                    <div class="bilgi-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Ankara / Türkiye</span>
+                    </div>
+                    <div class="bilgi-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>destek@synapz.com</span>
+                    </div>
+                    <div class="bilgi-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+90 (312) 000 00 00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="iletisim-form-kutusu">
+                <h4>Mesaj Gönderin</h4>
+                <form id="iletisimFormu">
+                    <div class="input-grup">
+                        <input type="text" placeholder="Adınız Soyadınız" required> <!--required:boş bırakılamaz-->
+                    </div>
+                    <div class="input-grup">
+                        <input type="email" placeholder="E-posta Adresiniz" required>
+                    </div>
+                    <div class="input-grup">
+                        <textarea placeholder="Mesajınız nedir?" rows="5" required></textarea> <!--5 satırlık mesaj kutusu-->
+                    </div>
+                    <button type="submit" class="btn-gonder">Mesajı İlet <i class="fa-solid fa-paper-plane"></i></button> <!--submit:onayla butonu(imleci yeniler)-->
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Etkinlik Takip Sistemi. Tüm hakları saklıdır.</p>
+    </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const loggedInID = localStorage.getItem('synapz_user_id');
+        const loggedInName = localStorage.getItem('synapz_user_name');
+        
+        // Eğer hafızada bir kullanıcı ID'si varsa, "Giriş Yap/Kaydol" butonunu "Profilim" yap
+        if (loggedInID && loggedInName) {
+            // Sağ üstteki aksiyon alanını veya girisLink id'li butonu buluyoruz
+            const girisLink = document.getElementById('girisLink') || document.querySelector('.header-action a');
+            if (girisLink) {
+                const kısaIsim = loggedInName.split(' ')[0]; // Sadece ilk adı göster (Örn: Ahmet)
+                girisLink.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${kısaIsim}`;
+                girisLink.href = `profil.html?id=${loggedInID}`;
+            }
+        }
+    });
+</script>
+</body>
+</html>

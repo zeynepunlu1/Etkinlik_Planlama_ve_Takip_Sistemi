@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap & Kaydol | SYNAPZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+
+    <header class="header"> 
+        <a href="index.html" class="logo">
+            <i class="fa-regular fa-calendar-check"></i> SYNAPZ
+        </a>
+        <nav class="navbar">
+            <a href="index.html">Anasayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+        </nav>
+        <div class="header-action">
+            <a href="giris_kayit.html" id="girisLink" class="nav-btn">Giriş Yap/Kaydol</a>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchForm('login')">Giriş Yap</button>
+                <button class="tab-btn" onclick="switchForm('register')">Kaydol</button>
+            </div>
+
+            <form id="loginForm" class="auth-form active" action="/api/giris" method="POST">
+                <h2>Tekrar Hoş Geldin! 👋</h2>
+                <p class="form-subtitle">Şehrin ritmini yakalamaya kaldığın yerden devam et.</p>
+
+                <div class="input-group">
+                    <input type="email" name="eposta" placeholder="E-posta Adresi" required>
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="sifre" placeholder="Şifre" required>
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember"> Beni Hatırla
+                    </label>
+                    <a href="#" class="forgot-pass">Şifremi Unuttum</a>
+                </div>
+
+                <button type="submit" class="auth-btn">Giriş Yap</button> 
+            </form>
+
+            <form id="registerForm" class="auth-form" action="/api/kayit" method="POST">
+                <h2>Aramıza Katıl! 🎯</h2>
+                <p class="form-subtitle">En popüler etkinlikler ve biletler için hemen hesabını oluştur.</p>
+
+                <div class="input-group">
+                    <input type="text" name="ad" placeholder="Adınız" required>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="soyad" placeholder="Soyadınız" required>
+                    <i class="fa-solid fa-user-tag"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="eposta" placeholder="E-posta Adresi" required>
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <div class="input-group">
+                    <select name="role" required>
+                        <option value="" disabled selected>Hesap Türü Seçiniz</option>
+                        <option value="Katılımcı">Katılımcı (Bilet Alacağım)</option>
+                        <option value="Organizatör">Organizatör (Etkinlik Düzenleyeceğim)</option>
+                        <option value="Mekan Sahibi">Mekan Sahibi</option>
+                        <option value="Admin">Sistem Yöneticisi (Admin)</option>
+                    </select>
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="telefon" placeholder="Telefon Numaranız">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="sehir" placeholder="Şehir (Örn: Ankara)">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="sifre" placeholder="Güçlü Bir Şifre Oluşturun" required>
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <button type="submit" class="auth-btn">Kayıt Ol</button>
+            </form>
+
+        </div>
+    </main>
+
+    <script>
+        function switchForm(formType) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            if (formType === 'login') {
+                tabs[0].classList.add('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                tabs[1].classList.add('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
+        }
+    </script>
+    <script>
+    // Formun sunucudan dönen cevabını izlemek veya localStorage'a kayıt atmak için intercept yapıyoruz
+    document.getElementById('loginForm').addEventListener('submit', function() {
+        // Form post edildiğinde e-posta adresini geçici olarak hafızaya atıyoruz
+        const emailInput = this.querySelector('input[name="eposta"]').value;
+        localStorage.setItem('synapz_gecici_email', emailInput);
+    });
+</script>
+</body>
+</html>

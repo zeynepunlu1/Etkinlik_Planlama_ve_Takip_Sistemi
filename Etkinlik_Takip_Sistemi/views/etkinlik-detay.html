@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Detayı | SYNAPZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="public/style.css">
+    <style>
+        .comment-section-box {
+            margin-top: 30px; background: #fff; padding: 25px; border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05);
+        }
+        .comment-card-modern {
+            background: #f8f9fa; border-left: 4px solid #6c5ce7; padding: 15px; border-radius: 8px; margin-bottom: 15px;
+        }
+        .rating-stars-select, .category-select-price, .seat-select-box { padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #d35400; }
+        .category-select-price { width: 100%; color: #2d3436; margin-bottom: 15px; font-size: 14px; background: #f8f9fa; }
+        .seat-select-box { width: 100%; color: #2d3436; margin-bottom: 15px; font-size: 14px; background: #f8f9fa; }
+        .textarea-modern { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc; resize: vertical; margin-top: 8px; }
+        
+        .synapz-follow-engine {
+            border: none !important;
+            padding: 8px 16px !important;
+            border-radius: 20px !important;
+            font-weight: 700 !important;
+            font-size: 12px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            color: white !important;
+        }
+        .synapz-follow-engine:hover {
+            transform: translateY(-1px);
+        }
+        
+        .seat-selection-group {
+            background: #f1f2f6;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px dashed #6c5ce7;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header"> 
+        <a href="index.html" class="logo"><i class="fa-regular fa-calendar-check"></i> SYNAPZ</a>
+        <nav class="navbar">
+            <a href="index.html">Anasayfa</a>
+            <a href="etkinlikler.html" class="active">Etkinlikler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+        </nav>
+        <div class="header-action">
+            <a href="giris_kayit.html" id="girisLink" class="nav-btn">Giriş Yap/Kaydol</a>
+        </div>
+    </header>
+
+    <main class="detail-container">
+        <div class="detail-wrapper">
+            
+            <section class="detail-main">
+                <div id="detayBanner" class="detail-hero-banner" style="background: linear-gradient(135deg, #6c5ce7 0%, #a55eea 100%);">
+                    <i id="detayIcon" class="fa-solid fa-calendar-stars fa-4x" style="margin-bottom: 15px;"></i>
+                    <h2 id="detayBaslik">Yükleniyor...</h2>
+                </div>
+                
+                <div class="detail-info-box">
+                    <h3><i class="fa-solid fa-circle-info"></i> Etkinlik Açıklaması</h3>
+                    <p id="detayAciklama">Etkinlik detayları veritabanından çekiliyor...</p>
+                </div>
+
+                <div class="detail-info-box" style="margin-top:20px; background:#fffbfb; border:1px solid rgba(234,84,85,0.1);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; color:#ea5455;"><i class="fa-solid fa-star"></i> Sahne Alacak Sanatçı</h3>
+                        <div id="sanatciTakipButonAlani"></div>
+                    </div>
+                    <strong id="detaySanatciAdi">--</strong>
+                    <p id="detaySanatciBiyo" style="font-size:14px; color:#7f8c8d; margin-top:6px;">--</p>
+                </div>
+
+                <div class="detail-meta-grid">
+                    <div class="meta-item">
+                        <i class="fa-solid fa-user-astronaut" style="color: #6c5ce7;"></i>
+                        <div>
+                            <strong>Kategori / Tür</strong>
+                            <p id="detayKategori">--</p>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-building-shield" style="color: #6c5ce7;"></i>
+                        <div>
+                            <strong>Organizatör</strong>
+                            <p id="detayOrganizator">--</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="katilimciYorumKutusu" class="comment-section-box" style="display: none;">
+                    <h3 style="color:#6c5ce7; margin-top:0;"><i class="fa-solid fa-pen-line"></i> Deneyiminizi Paylaşın (Sadece Katılımcılar)</h3>
+                    <div style="display:flex; align-items:center; gap:15px; margin-bottom:12px;">
+                        <label><strong>Puanınız:</strong></label>
+                        <select id="yorumPuanlama" class="rating-stars-select">
+                            <option value="5">⭐⭐⭐⭐⭐ 5 Puan</option>
+                            <option value="4">⭐⭐⭐⭐ 4 Puan</option>
+                            <option value="3">⭐⭐⭐ 3 Puan</option>
+                            <option value="2">⭐⭐ 2 Puan</option>
+                            <option value="1">⭐ 1 Puan</option>
+                        </select>
+                    </div>
+                    <textarea id="yorumIcerikMetni" rows="3" class="textarea-modern" placeholder="Etkinlik hakkındaki yapıcı eleştirilerinizi yazın..."></textarea>
+                    <button onclick="canliYorumGonder()" style="background: linear-gradient(135deg, #6c5ce7 0%, #a55eea 100%); color:white; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; margin-top:12px; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i> Onaya Gönder</button>
+                </div>
+
+                <div class="comment-section-box" style="margin-top:25px;">
+                    <h3 style="color:#2d3436; margin-top:0; border-bottom:2px solid #f1f2f6; padding-bottom:10px;"><i class="fa-solid fa-comments"></i> Katılımcı Değerlendirmeleri</h3>
+                    <div id="canliYorumHavuzu">
+                        <p style="color:#7f8c8d; font-style:italic;">Bu etkinlik için henüz onaylanmış bir kullanıcı yorumu bulunmamaktadır.</p>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="ticket-sidebar">
+                <div class="purchase-card">
+                    <span id="detayDurumRozeti" class="status-badge">--</span>
+                    
+                    <div class="price-section">
+                        <small>Bilet Fiyatı</small>
+                        <h2 id="detayFiyat">-- TL</h2>
+                        <span id="kuponAlani" class="coupon-tip"><i class="fa-solid fa-tag"></i> 'ILK20' kodu ile %20 İndirimli!</span>
+                    </div>
+
+                    <div class="summary-list">
+                        <div class="summary-item" style="display:block;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+                                <div style="display:flex; gap:10px; align-items:center;">
+                                    <i class="fa-solid fa-building" style="color:#6c5ce7;"></i>
+                                    <div>
+                                        <strong>Mekân</strong>
+                                        <p id="detayMekan" style="margin:0;">--</p>
+                                    </div>
+                                </div>
+                                <div id="mekanTakipButonAlani"></div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <div>
+                                <strong>Tarih & Saat</strong>
+                                <p id="detayZaman">--</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="biletKategoriSecimAlani" style="margin-top: 15px;">
+                        <label style="font-size: 12px; font-weight: 700; color: #7f8c8d; display: block; margin-bottom: 5px;">BİLET KATEGORİSİ SEÇİN</label>
+                        <select id="biletKategorisi" class="category-select-price" onchange="canliFiyatHesapla()">
+                            <option value="Standart">Standart Bilet (Ham Taban Fiyat)</option>
+                            <option value="Kategori 3">Kategori 3 Bilet (+%10 Ek Tutar)</option>
+                            <option value="Kategori 2">Kategori 2 Bilet (+%30 Ek Tutar)</option>
+                            <option value="Kategori 1">Kategori 1 Bilet (+%50 Ek Tutar)</option>
+                            <option value="VIP">VIP Bilet (+%100 Ek Tutar)</option>
+                        </select>
+                    </div>
+
+                    <div id="koltukSecimKutusu" class="seat-selection-group" style="display: none;">
+                        <label style="font-size: 11px; font-weight: 800; color: #6c5ce7; display: block; margin-bottom: 6px;"><i class="fa-solid fa-chair"></i> KONTENJAN / KOLTUK ATAMASI</label>
+                        <div style="display: flex; gap: 10px;">
+                            <select id="koltukSira" class="seat-select-box" style="flex: 1; margin-bottom: 0;">
+                                <option value="Sıra 1">Sıra 1</option>
+                                <option value="Sıra 2">Sıra 2</option>
+                                <option value="Sıra 3">Sıra 3</option>
+                                <option value="Sıra 4">Sıra 4</option>
+                                <option value="Sıra 5">Sıra 5</option>
+                            </select>
+                            <select id="koltukNo" class="seat-select-box" style="flex: 1; margin-bottom: 0;">
+                                <option value="Koltuk 1">Koltuk 1</option>
+                                <option value="Koltuk 2">Koltuk 2</option>
+                                <option value="Koltuk 3">Koltuk 3</option>
+                                <option value="Koltuk 4">Koltuk 4</option>
+                                <option value="Koltuk 5">Koltuk 5</option>
+                                <option value="Koltuk 6">Koltuk 6</option>
+                                <option value="Koltuk 7">Koltuk 7</option>
+                                <option value="Koltuk 8">Koltuk 8</option>
+                                <option value="Koltuk 9">Koltuk 9</option>
+                                <option value="Koltuk 10">Koltuk 10</option>
+                                <option value="Koltuk 11">Koltuk 11</option>
+                                <option value="Koltuk 12">Koltuk 12</option>
+                                <option value="Koltuk 13">Koltuk 13</option>
+                                <option value="Koltuk 14">Koltuk 14</option>
+                                <option value="Koltuk 15">Koltuk 15</option>
+                                <option value="Koltuk 16">Koltuk 16</option>
+                                <option value="Koltuk 17">Koltuk 17</option>
+                                <option value="Koltuk 18">Koltuk 18</option>
+                                <option value="Koltuk 19">Koltuk 19</option>
+                                <option value="Koltuk 20">Koltuk 20</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="detayButonKutusu"></div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        let dinamikTabanFiyat = 400.00; 
+        let etkinlikKilitli = false;
+        const katilimciID = localStorage.getItem('synapz_user_id');
+
+        function headerGirisKontrolu() {
+            const loggedInID = localStorage.getItem('synapz_user_id');
+            const loggedInName = localStorage.getItem('synapz_user_name');
+            if (loggedInID && loggedInName) {
+                const girisLink = document.getElementById('girisLink');
+                if (girisLink) {
+                    const kisaIsim = loggedInName.split(' ')[0];
+                    girisLink.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${kisaIsim}`;
+                    girisLink.href = `profil.html?id=${loggedInID}`;
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            headerGirisKontrolu();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const etkinlikID = urlParams.get('id');
+
+            if (!etkinlikID) {
+                window.location.href = 'etkinlikler.html';
+                return;
+            }
+
+            fetch(`/api/etkinlik-detay/${etkinlikID}`)
+                .then(res => res.json())
+                .then(data => {
+                    const secilenEtkinlik = data.etkinlik;
+                    if (!secilenEtkinlik) {
+                        document.getElementById('detayBaslik').innerText = "Etkinlik Bulunamadı!";
+                        return;
+                    }
+
+                    dinamikTabanFiyat = parseFloat(secilenEtkinlik.Taban_Fiyat || 400);
+
+                    document.getElementById('detayBaslik').innerText = secilenEtkinlik.Etkinlik_Adi;
+                    document.getElementById('detayKategori').innerText = secilenEtkinlik.Etkinlik_Kategori;
+                    document.getElementById('detayMekan').innerText = `${secilenEtkinlik.Mekan_Adi} (${secilenEtkinlik.Sehir})`;
+                    
+                    canliFiyatHesapla();
+
+                    document.getElementById('detayZaman').innerText = new Date(secilenEtkinlik.Baslangic_Zamani).toLocaleString('tr-TR');
+                    document.getElementById('detayAciklama').innerText = secilenEtkinlik.Aciklama;
+                    
+                    document.getElementById('detaySanatciAdi').innerText = secilenEtkinlik.Sahne_Adi || "Grup / Kadro Etkinliği";
+                    document.getElementById('detaySanatciBiyo').innerText = secilenEtkinlik.Biyografi || "Sanatçı biyografisi mevcut değil.";
+                    document.getElementById('detayOrganizator').innerText = secilenEtkinlik.Etkinlik_ID <= 2 ? "Erol Can Prodüksiyon" : "Grup Medya ve Organizasyon";
+
+                    try {
+                        if(katilimciID) {
+                            if(secilenEtkinlik.Sanatci_ID) takipButonDurumunuGuncelle(secilenEtkinlik.Sanatci_ID, 'Sanatçı', 'sanatciTakipButonAlani');
+                            if(secilenEtkinlik.Mekan_Sahibi_ID) takipButonDurumunuGuncelle(secilenEtkinlik.Mekan_Sahibi_ID, 'Mekan', 'mekanTakipButonAlani');
+                        }
+                    } catch(e) { console.error("Takip buton yükleme hatası pas geçildi:", e); }
+
+                    const yorumKutusu = document.getElementById('canliYorumHavuzu');
+                    if (data.yorumlar && data.yorumlar.length > 0) {
+                        yorumKutusu.innerHTML = "";
+                        data.yorumlar.forEach(y => {
+                            yorumKutusu.innerHTML += `
+                                <div class="comment-card-modern">
+                                    <strong><i class="fa-regular fa-user"></i> ${y.Katilimci_Adi || 'Biletli Kullanıcı'}</strong>
+                                    <p style="margin:5px 0 0 0; font-size:14px; color:#2d3436;">"${y.Icerik}"</p>
+                                </div>`;
+                        });
+                    }
+
+                    if (katilimciID) {
+                        fetch(`/api/profil/${katilimciID}`).then(r => r.json()).then(profileData => {
+                            if (profileData.rol === 'Katılımcı') document.getElementById('katilimciYorumKutusu').style.display = "block";
+                        });
+                    }
+
+                    const simdi = new Date();
+                    const etkinlikTarihi = new Date(secilenEtkinlik.Baslangic_Zamani);
+                    
+                    const rozet = document.getElementById('detayDurumRozeti');
+                    const butonKutusu = document.getElementById('detayButonKutusu');
+                    const kupon = document.getElementById('kuponAlani');
+
+                    if (etkinlikTarihi < simdi) {
+                        etkinlikKilitli = true;
+                        kupon.style.display = "none";
+                        document.getElementById('biletKategoriSecimAlani').style.display = "none";
+                        rozet.style.background = "rgba(110, 110, 110, 0.1)";
+                        rozet.style.color = "#636e72";
+                        rozet.innerHTML = `<i class="fa-solid fa-calendar-xmark"></i> Bilet Satışı Kapandı`;
+                        
+                        butonKutusu.innerHTML = `
+                            <button disabled style="background: #b2bec3; color: white; border: none; cursor: not-allowed; display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px;">
+                                <i class="fa-solid fa-calendar-xmark"></i> Etkinlik Bitti
+                            </button>`;
+                    } else if (secilenEtkinlik.SatilanBilet >= secilenEtkinlik.Kapasite) {
+                        etkinlikKilitli = true;
+                        kupon.style.display = "none";
+                        document.getElementById('biletKategoriSecimAlani').style.display = "none";
+                        rozet.style.background = "rgba(234, 84, 85, 0.1)";
+                        rozet.style.color = "#ea5455";
+                        rozet.innerHTML = `<i class="fa-solid fa-burst"></i> Biletler Tükendi`;
+                        
+                        butonKutusu.innerHTML = `
+                            <button disabled style="background: #ff7675; color: white; border: none; cursor: not-allowed; display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px;">
+                                <i class="fa-solid fa-burst"></i> Biletler Tükendi
+                            </button>`;
+                    } else {
+                        rozet.style.background = "rgba(46, 213, 115, 0.1)";
+                        rozet.style.color = "#2ed573";
+                        rozet.innerHTML = `<i class="fa-solid fa-circle-check"></i> Bilet Satışı Açık`;
+                        
+                        butonKutusu.innerHTML = `
+                            <button onclick="biletSatinAlDetay()" style="background: linear-gradient(135deg, #2ed573 0%, #26af5f 100%); color: white; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 12px rgba(46, 213, 115, 0.2); transition: all 0.25s ease;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
+                                <i class="fa-solid fa-cart-shopping"></i> Bilet Satın Al
+                            </button>`;
+                    }
+
+                    const kategoriTemiz = (secilenEtkinlik.Etkinlik_Kategori || "").toLowerCase().trim();
+                    let resimUrl = "public/images/hakkımızda.jpeg";
+
+                    if (kategoriTemiz === 'konser') {
+                        resimUrl = "public/images/konser.jfif";
+                        document.getElementById('detayIcon').className = "fa-solid fa-music fa-4x";
+                    } else if (kategoriTemiz === 'stand-up' || kategoriTemiz === 'standup') {
+                        resimUrl = "public/images/stand up.jfif"; 
+                        document.getElementById('detayIcon').className = "fa-solid fa-microphone fa-4x";
+                    } else if (kategoriTemiz === 'tiyatro' || kategoriTemiz === 'müzikal' || kategoriTemiz === 'opera' || kategoriTemiz === 'resital') {
+                        resimUrl = "public/images/tiyatro.jfif";
+                        document.getElementById('detayIcon').className = "fa-solid fa-masks-theater fa-4x";
+                    } else if (kategoriTemiz === 'festival') {
+                        resimUrl = "public/images/festival.jfif";
+                        document.getElementById('detayIcon').className = "fa-solid fa-campground fa-4x";
+                    } else if (kategoriTemiz === 'sinema') {
+                        resimUrl = "public/images/sinema.jfif";
+                        document.getElementById('detayIcon').className = "fa-solid fa-film fa-4x";
+                    }
+
+                    document.getElementById('detayBanner').style.background = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('${resimUrl}') no-repeat center center / cover`;
+                    headerGirisKontrolu();
+                });
+        });
+
+        function canliFiyatHesapla() {
+            const secilenKat = document.getElementById('biletKategorisi').value;
+            const koltukKutusu = document.getElementById('koltukSecimKutusu');
+            let canliFiyat = dinamikTabanFiyat;
+
+            if (secilenKat === 'Standart') {
+                koltukKutusu.style.display = "none";
+            } else {
+                koltukKutusu.style.display = "block";
+            }
+
+            if (secilenKat === 'VIP') {
+                canliFiyat = dinamikTabanFiyat * 2.0;
+            } else if (secilenKat === 'Kategori 1') {
+                canliFiyat = dinamikTabanFiyat * 1.5;
+            } else if (secilenKat === 'Kategori 2') {
+                canliFiyat = dinamikTabanFiyat * 1.3;
+            } else if (secilenKat === 'Kategori 3') {
+                canliFiyat = dinamikTabanFiyat * 1.1;
+            }
+
+            document.getElementById('detayFiyat').innerText = canliFiyat.toFixed(2) + " TL";
+        }
+
+        function takipButonDurumunuGuncelle(hedefID, grandfather, hedefTuru, divID) {
+            let gerçekTargetID = hedefID;
+            let gerçekTuru = grandfather;
+            let gerçekDiv = hedefTuru;
+
+            fetch(`/api/takip-kontrol?katilimciID=${katilimciID}&hedefID=${gerçekTargetID}&hedefTuru=${gerçekTuru}`)
+                .then(res => res.json())
+                .then(data => {
+                    const kutu = document.getElementById(gerçekDiv);
+                    if (kutu && data) {
+                        if (data.takipte) {
+                            kutu.innerHTML = `<button type="button" onclick="takipAksiyon(${gerçekTargetID}, '${gerçekTuru}', 'birak')" class="synapz-follow-engine" style="background:#ff7675;"><i class="fa-solid fa-heart-crack"></i> Takibi Bırak</button>`;
+                        } else {
+                            kutu.innerHTML = `<button type="button" onclick="takipAksiyon(${gerçekTargetID}, '${gerçekTuru}', 'et')" class="synapz-follow-engine" style="background:#74b9ff;"><i class="fa-solid fa-heart"></i> Takip Et</button>`;
+                        }
+                    }
+                }).catch(e => console.error(e));
+        }
+
+        function takipAksiyon(hedefID, hedefTuru, eylem) {
+            const url = eylem === 'et' ? '/api/takip-et' : '/api/takip-birak';
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ katilimciID, hedefID, hedefTuru })
+            }).then(res => res.json()).then(data => {
+                alert(data.mesaj);
+                window.location.reload();
+            }).catch(err => console.error(err));
+        }
+
+        function biletSatinAlDetay() {
+            if (etkinlikKilitli) return;
+            const urlParams = new URLSearchParams(window.location.search);
+            const etkinlikID = urlParams.get('id');
+            const secilenKategori = document.getElementById('biletKategorisi').value;
+
+            if (!katilimciID) {
+                alert("Bilet satın alabilmek için lütfen önce sisteme giriş yapınız!");
+                window.location.href = 'giris_kayit.html';
+                return;
+            }
+
+            const ekrandakiFiyatMetni = document.getElementById('detayFiyat').innerText;
+            const guncelHesaplanmisFiyat = parseFloat(ekrandakiFiyatMetni.replace(" TL", ""));
+
+            let nihaiKoltukBilgisi = "Ayakta / Numarasız";
+            if (secilenKategori !== "Standart") {
+                const sira = document.getElementById('koltukSira').value;
+                const no = document.getElementById('koltukNo').value;
+                nihaiKoltukBilgisi = `${sira} - ${no}`;
+            }
+
+            if (!confirm(`Seçtiğiniz kategori ve koltuk numarası (${nihaiKoltukBilgisi}) ile bilet satın almak istediğinize emin misiniz?`)) return;
+
+            fetch('/api/bilet-al', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    katilimciID: katilimciID, 
+                    etkinlikID: etkinlikID, 
+                    fiyat: guncelHesaplanmisFiyat,
+                    kategori: secilenKategori,
+                    koltukNo: nihaiKoltukBilgisi
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.basarili) {
+                    alert("🎉 " + data.mesaj);
+                    window.location.href = `profil.html?id=${katilimciID}`; 
+                } else {
+                    alert("❌ Bilet Alınamadı: " + data.mesaj);
+                }
+            });
+        }
+
+        function canliYorumGonder() {
+            const icerik = document.getElementById('yorumIcerikMetni').value;
+            const puan = document.getElementById('yorumPuanlama').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const etkinlikID = urlParams.get('id');
+
+            if (!iceri) { alert("Metin yazınız!"); return; }
+
+            fetch('/api/yorum-yap', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ icerik, puan, etkinlikID, katilimciID })
+            }).then(res => res.json()).then(data => {
+                if (data.basarili) { alert("🎉 " + data.mesaj); document.getElementById('yorumIcerikMetni').value = ""; }
+                else { alert("❌ Hata: " + data.mesaj); }
+            });
+        }
+    </script>
+</body>
+</html>

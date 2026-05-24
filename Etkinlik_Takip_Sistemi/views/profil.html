@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNAPZ - Profil Yönetim Paneli</title>
+    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Profil için ekstra stiller */
+        .logout-btn {
+            background: linear-gradient(135deg, #ea5455 0%, #ff4141 100%) !important;
+            color: white !important;
+            border-radius: 30px !important;
+            padding: 10px 24px !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 15px rgba(234, 84, 85, 0.3);
+            transition: all 0.3s ease !important;
+        }
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(234, 84, 85, 0.5);
+        }
+        .profile-card-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+        .data-card-modern {
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            background: white !important;
+            border-radius: 16px !important;
+            padding: 22px !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        .data-card-modern:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06) !important;
+        }
+        .ticket-count-badge {
+            background: #6c5ce7;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-left: 10px;
+            display: inline-block;
+        }
+        .profile-align-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header"> 
+        <a href="index.html" class="logo"><i class="fa-regular fa-calendar-check"></i> SYNAPZ</a>
+        <nav class="navbar">
+            <a href="index.html">Anasayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="hakkimizda.html">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+        </nav>
+        <div class="header-action">
+            <a href="giris_kayit.html" onclick="localStorage.clear();" class="nav-btn logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap</a>
+        </div>
+    </header>
+
+    <div class="discover-container">
+        <div class="filter-sidebar profile-sidebar profile-card-shadow">
+            <div class="profile-align-center" style="margin-bottom: 25px;">
+                <div id="profilAvatar" class="profile-avatar-circle" style="box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 90px; height: 90px; margin: 0 auto 15px; display:flex; align-items:center; justify-content:center; border-radius:50%; color:white;">
+                    <i id="profilIcon" class="fa-solid fa-user fa-2x"></i>
+                </div>
+                <h3 id="profIsim" class="profile-name" style="font-size: 22px; color: #2d3436; font-weight: 800; margin: 10px 0;">Yükleniyor...</h3>
+                <span id="profRolRozet" class="category-badge profile-role-badge" style="letter-spacing: 1px; padding: 6px 16px;">--</span>
+            </div>
+            <div style="padding: 5px 10px;">
+                <div id="durumUyarisi" class="profile-align-center" style="margin-bottom:12px; font-weight:bold; font-size:13px;"></div>
+                <div id="dinamikDetaylar"></div>
+            </div>
+            <hr class="profile-hr">
+            <div id="finansalKart" class="fin-summary-card" style="border-radius: 14px; padding: 15px; text-align: center;">
+                <span id="finansalBaslik" class="fin-card-title" style="display:block; font-size:12px; font-weight:700;">--</span>
+                <h2 id="finansalDeger" class="fin-card-value" style="font-size: 26px; margin: 5px 0 0 0;">--</h2>
+            </div>
+        </div>
+
+        <div class="events-feed">
+            <div class="feed-header" style="margin-bottom: 30px;">
+                <h2 id="listeBaslik" style="font-size: 26px; font-weight: 800; color: #2d3436; display:flex; justify-content:space-between; align-items:center;">Yükleniyor...</h2>
+                <p id="listeAciklama" style="color: #7f8c8d; font-size: 15px; margin-top: 4px;">--</p>
+            </div>
+            
+            <div id="bakiyeTransferFormu" style="display:none; background:#f5f6fa; padding:20px; border-radius:12px; margin-bottom:25px; border:1px solid #2ed573;">
+                <h3 style="color:#26af5f; margin-top:0; margin-bottom:12px;"><i class="fa-solid fa-gift"></i> Başka Bir Kullanıcıya Hediye Bakiye Transferi</h3>
+                <div style="display:flex; gap:15px;">
+                    <input type="email" id="transferEposta" placeholder="Alıcının E-posta Adresi" style="flex:2; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <input type="number" id="transferMiktar" placeholder="Miktar (TL)" style="flex:1; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <button onclick="bakiyeGonder()" style="background:#2ed573; color:white; border:none; padding:10px 20px; border-radius:6px; font-weight:bold; cursor:pointer;">Bakiyeyi Uçur 🚀</button>
+                </div>
+            </div>
+
+            <div id="etkinlikEklemeFormu" style="display:none; background:#f8f9fa; padding:20px; border-radius:12px; margin-bottom:25px; border:1px dashed #0984e3;">
+                <h3 style="color:#0984e3; margin-top:0; margin-bottom:15px;"><i class="fa-solid fa-plus"></i> Yeni Etkinlik Tanımlama Masası</h3>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <input type="text" id="formEtkAd" placeholder="Etkinlik Adı" style="padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <select id="formEtkKat" style="padding:10px; border-radius:6px; border:1px solid #ccc;">
+                        <option value="Konser">Konser</option>
+                        <option value="Stand-up">Stand-up</option>
+                        <option value="Resital">Resital</option>
+                        <option value="Tiyatro">Tiyatro</option>
+                        <option value="Opera">Opera</option>
+                        <option value="Müzikal">Müzikal</option>
+                        <option value="Sinema">Sinema</option>
+                    </select>
+                    <input type="datetime-local" id="formEtkZaman" style="padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <select id="formEtkMekan" style="padding:10px; border-radius:6px; border:1px solid #ccc;">
+                        <option value="1">Kadıköy Sahne Merkez (İstanbul)</option>
+                        <option value="2">Ankara Jolly Joker (Ankara)</option>
+                        <option value="3">Harbiye Açıkbava (İstanbul)</option>
+                        <option value="4">CSO Ada Ankara (Ankara)</option>
+                        <option value="5">Zorlu PSM Turkcell Sahnesi (İstanbul)</option>
+                        <option value="6">AKM Türk Telekom Opera Salonu (İstanbul)</option>
+                        <option value="7">SYNAPZ Butik Sahne (Ankara)</option>
+                    </select>
+                    <input type="number" id="formEtkFiyat" placeholder="Bilet Taban Fiyatı (TL)" style="padding:10px; border-radius:6px; border:1px solid #ccc;">
+                    <input type="text" id="formEtkAciklama" placeholder="Etkinlik Künyesi ve Açıklaması" style="grid-column:1/-1; padding:10px; border-radius:6px; border:1px solid #ccc;">
+                </div>
+                <button onclick="kaydetYeniEtkinlik()" style="background:#0984e3; color:white; border:none; padding:10px 20px; border-radius:6px; font-weight:bold; margin-top:15px; cursor:pointer;">Mekan Çakışma Analizini Başlat ve Kaydet</button>
+            </div>
+
+            <div id="profilAnaListe" class="events-grid profile-feed-grid"></div>
+            
+            <div id="takipEdilenlerAlani" style="display:none; margin-top:40px;">
+                <h3 style="font-size:22px; font-weight:800; color:#2d3436; margin-bottom:15px;"><i class="fa-solid fa-heart" style="color:#ff7675;"></i> Takip Ettiğim Odaklar (Sanatçılar ve Mekanlar)</h3>
+                <div id="takipSanatciListesi" class="events-grid profile-feed-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const kullaniciID = urlParams.get('id');
+
+            if (!kullaniciID) {
+                window.location.href = '/giris_kayit.html';
+                return;
+            }
+
+            fetch(`/api/profil/${kullaniciID}`)
+                .then(res => res.json())
+                .then(data => {
+                    const detayAlani = document.getElementById('dinamikDetaylar');
+                    const finansalKart = document.getElementById('finansalKart');
+                    const anaListe = document.getElementById('profilAnaListe');
+                    const avatar = document.getElementById('profilAvatar');
+                    const icon = document.getElementById('profilIcon');
+                    const durumKutusu = document.getElementById('durumUyarisi');
+                    
+                    document.getElementById('profIsim').innerText = data.bilgiler.Ad_Soyad;
+                    document.getElementById('profRolRozet').innerText = data.rol;
+                    anaListe.innerHTML = "";
+
+                    if (data.bilgiler.Hesap_Durumu === 'Askıda') {
+                        durumKutusu.innerHTML = `<span style="background:#ff7675; color:white; padding:4px 10px; border-radius:4px;"><i class="fa-solid fa-circle-exclamation"></i> Hesap Durumu: Askıda</span>`;
+                    } else {
+                        durumKutusu.innerHTML = `<span style="background:#2ed573; color:white; padding:4px 10px; border-radius:4px;"><i class="fa-solid fa-circle-check"></i> Hesap Durumu: Aktif</span>`;
+                    }
+
+                    if (data.rol === 'Katılımcı') {
+                        avatar.style.background = "linear-gradient(135deg, #ff7675 0%, #ea5455 100%)"; 
+                        document.getElementById('profRolRozet').style.background = "rgba(234, 84, 85, 0.1)";
+                        document.getElementById('profRolRozet').style.color = "#ea5455";
+                        icon.className = "fa-solid fa-user fa-2x";
+
+                        detayAlani.innerHTML = `
+                            <div class="event-info profile-info-line"><strong>E-posta:</strong> ${data.bilgiler.Eposta}</div>
+                            <div class="event-info profile-info-line"><strong>İletişim:</strong> ${data.bilgiler.Telefon}</div>
+                            <div class="event-info profile-info-line"><strong>Şehir:</strong> ${data.bilgiler.Sehir}</div>
+                            <div class="event-info profile-info-line"><strong>Kupon Havuzu:</strong> <span class="category-badge">${data.bilgiler.Indirim_Kodu || 'YOK'}</span></div>`;
+                        
+                        finansalKart.style.background = 'linear-gradient(135deg, rgba(46, 213, 115, 0.15) 0%, rgba(46, 213, 115, 0.05) 100%)';
+                        document.getElementById('finansalBaslik').innerText = "CÜZDAN BAKİYESİ";
+                        document.getElementById('finansalDeger').innerText = parseFloat(data.bilgiler.Bakiye).toFixed(2) + " TL";
+
+                        document.getElementById('listeBaslik').innerHTML = `Satın Aldığım Güncel Biletler <button onclick="document.getElementById('bakiyeTransferFormu').style.display='block'" style="background:#2ed573; color:white; border:none; padding:8px 14px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Bakiye Transferi Yap</button>`;
+                        document.getElementById('listeAciklama').innerText = "Şartname Kuralları: Satın aldığınız biletlerin yönetim havuzu.";
+
+                        document.getElementById('takipEdilenlerAlani').style.display = "block";
+                        const takipListesiKutusu = document.getElementById('takipSanatciListesi');
+                        takipListesiKutusu.innerHTML = "";
+                        
+                        // Takip edilen odağın türüne göre (Sanatçı/Mekan) dinamik ikon ve renk atar
+                        if(data.takipleri && data.takipleri.length > 0) {
+                            takipListesiKutusu.innerHTML = ""; // Havuzu temizle
+                            data.takipleri.forEach(t => {
+                            //  null veya boş gelen kayıtların arayüzü bozmasını engeller
+                            if (!t.Isim || t.Isim === 'null' || t.Isim === null) return;
+
+                            // Mekan ise mor ve bina ikonu, Sanatçı ise kırmızı ve yıldız ikonu basar
+                            let rozetRenk = t.Hedef_Turu === 'Mekan' ? '#6c5ce7' : '#ea5455';
+                            let ikonTuru = t.Hedef_Turu === 'Mekan' ? 'fa-building' : 'fa-star';
+        
+                            // Backend'den gelen id kolonunun adını (Hedef_ID) sistemine göre eşleştirir.
+                            let gercekHedefID = t.Hedef_ID || t.Kullanici_ID || t.Takip_ID;
+
+                            takipListesiKutusu.innerHTML += `
+                                <div class="event-card data-card-modern" style="padding:15px; background:#fffbfb !important; border:1px solid ${rozetRenk}; display: flex; justify-content: space-between; align-items: center; width:100%; box-sizing:border-box; margin-bottom:10px;">
+                                <div>
+                                <h5 style="margin:0; font-size:16px; color:${rozetRenk};"><i class="fa-solid ${ikonTuru}"></i> ${t.Isim}</h5>
+                                <p style="margin:4px 0 0 0; font-size:12px; color:#7f8c8d;">Statü / Detay: ${t.Detay || 'Bilgi Yok'} (${t.Hedef_Turu})</p>
+                            </div>
+                            <button type="button" onclick="takipAksiyon(${gercekHedefID}, '${t.Hedef_Turu}', 'birak')" class="synapz-follow-engine" style="background:#ff7675; font-size:11px; padding:6px 12px !important;"><i class="fa-solid fa-heart-crack"></i> Bırak</button>
+                            </div>`;
+                            });
+                            } else {
+                                takipListesiKutusu.innerHTML = "<p style='color:#7f8c8d; font-style:italic; font-size:13px;'>Henüz takip ettiğiniz bir odak bulunmamaktadır.</p>";
+                            }
+
+                        if(!data.liste || data.liste.length === 0) {
+                            anaListe.innerHTML = "<p style='color:#7f8c8d; font-style:italic;'>Henüz satın alınmış bir biletiniz bulunmamaktadır.</p>";
+                            return;
+                        }
+
+                        const gruplanmis = {};
+                        data.liste.forEach(bilet => {
+                            if (!gruplanmis[bilet.Etkinlik_Adi]) {
+                                gruplanmis[bilet.Etkinlik_Adi] = { ...bilet, Adet: 1, IDs: [bilet.Bilet_ID], ToplamFiyat: parseFloat(bilet.Fiyat) };
+                            } else {
+                                gruplanmis[bilet.Etkinlik_Adi].Adet++;
+                                gruplanmis[bilet.Etkinlik_Adi].IDs.push(bilet.Bilet_ID);
+                                gruplanmis[bilet.Etkinlik_Adi].ToplamFiyat += parseFloat(bilet.Fiyat);
+                            }
+                        });
+
+                        Object.values(gruplanmis).forEach(g => {
+                            const simdi = new Date();
+                            const etkinlikTarihi = new Date(g.Baslangic_Zamani);
+                            let durumRozeti = etkinlikTarihi < simdi ? `<span class="category-badge" style="background:#dfe6e9; color:#636e72;">Kullanıldı</span>` : `<span class="category-badge" style="background:rgba(46,213,115,0.1); color:#2ed573;">${g.Durum}</span>`;
+                            let iptalButonu = etkinlikTarihi < simdi ? "" : `<button onclick="biletIptalEt(${g.IDs[g.IDs.length-1]})" style="background:linear-gradient(135deg, #ff7675 0%, #ea5455 100%); color:white; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:700;">İptal Et</button>`;
+                            const adetRozeti = g.Adet > 1 ? `<span class="ticket-count-badge">${g.Adet} Bilet</span>` : "";
+
+                            anaListe.innerHTML += `
+                                <div class="event-card data-card-modern" style="display:flex; align-items:center; width:100%; box-sizing:border-box;">
+                                    <div style="flex:1;">
+                                        <h4 style="margin:0; font-size:17px;">${g.Etkinlik_Adi} ${adetRozeti}</h4>
+                                        <p style="margin:5px 0 0 0; font-size:13px; color:#7f8c8d;"><i class="fa-solid fa-building"></i> ${g.Mekan_Adi}</p>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        ${durumRozeti}
+                                        <h3 style="margin:5px 0; color:#2d3436;">${g.ToplamFiyat.toFixed(2)} TL</h3>
+                                        ${iptalButonu}
+                                    </div>
+                                </div>`;
+                        });
+                    } 
+                    else if (data.rol === 'Organizatör') {
+                        avatar.style.background = "linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)";
+                        document.getElementById('profRolRozet').style.background = "rgba(9, 132, 227, 0.1)";
+                        document.getElementById('profRolRozet').style.color = "#0984e3";
+                        icon.className = "fa-solid fa-building-flag fa-2x";
+
+                        detayAlani.innerHTML = `
+                            <div class="event-info profile-info-line"><strong>Firma Ünvanı:</strong> ${data.bilgiler.Firma_Adi}</div>
+                            <div class="event-info profile-info-line"><strong>Vergi Numarası:</strong> ${data.bilgiler.Vergi_No}</div>`;
+
+                        finansalKart.style.background = 'linear-gradient(135deg, rgba(9, 132, 227, 0.15) 0%, rgba(9, 132, 227, 0.05) 100%)';
+                        document.getElementById('finansalBaslik').innerText = "FİNANSAL PORTFÖY DEĞERİ";
+                        document.getElementById('finansalDeger').innerText = parseFloat(data.bilgiler.CanliBakiye).toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + " TL";
+
+                        // Hesap askıdaysa "Yeni Etkinlik Tanımla" butonunu göstermemesi için
+                    if (data.bilgiler.Hesap_Durumu === 'Askıda') {
+                        document.getElementById('listeBaslik').innerHTML = `Düzenlediğim Etkinlikler <span style="color:#ff7675; font-size:13px; margin-left:10px;"><i class="fa-solid fa-lock"></i> Hesabınız askıda olduğu için yeni etkinlik açamazsınız.</span>`;
+                        } else {
+                        document.getElementById('listeBaslik').innerHTML = `Düzenlediğim Etkinlikler <button onclick="document.getElementById('etkinlikEklemeFormu').style.display='block'" style="background:#0984e3; color:white; border:none; padding:8px 14px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer;">Yeni Etkinlik Tanımla</button>`;
+                         }
+                        document.getElementById('listeAciklama').innerText = "Kural: Sadece sizin tarafınızdan açılan etkinlikler.";
+
+                        if(!data.liste || data.liste.length === 0) {
+                            anaListe.innerHTML = "<p style='color:#7f8c8d; font-style:italic;'>Henüz eklediğiniz bir etkinlik bulunmamaktadır.</p>";
+                            return;
+                        }
+
+                        data.liste.forEach(etk => {
+                            let durumStili = "";
+                            if (etk.Onay_Durumu === 'Beklemede') durumStili = `<span class="category-badge" style="background:rgba(255,159,67,0.1); color:#ff9f43; font-weight:bold;">⏳ Onay Bekliyor</span>`;
+                            else if (etk.Onay_Durumu === 'Onaylandı') durumStili = `<span class="category-badge" style="background:rgba(46,213,115,0.1); color:#2ed573; font-weight:bold;">✅ Onaylandı</span>`;
+                            else durumStili = `<span class="category-badge" style="background:rgba(234,84,85,0.1); color:#ff4141; font-weight:bold;">❌ Reddedildi</span>`;
+
+                            // HESAP DURUMU KONTROLÜ: Askıdaysa kilitli buton, aktifse silme fonksiyonlu buton tanımlanır
+                            let silmeButonu = "";
+                            if (data.bilgiler.Hesap_Durumu === 'Askıda') {
+                                silmeButonu = `<button disabled style="background:#dfe6e9; color:#b2bec3; border:none; padding:5px 12px; border-radius:6px; font-weight:bold; cursor:not-allowed; font-size:11px;"><i class="fa-solid fa-lock"></i> Engellendi</button>`;
+                            } else {
+                                silmeButonu = `<button onclick="etkinlikSil(${etk.Etkinlik_ID})" style="background:#ff7675; color:white; border:none; padding:5px 12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:11px;"><i class="fa-solid fa-trash"></i> Etkinliği Sil</button>`;
+                            }
+
+                            anaListe.innerHTML += `
+                                <div class="event-card data-card-modern" style="display:flex; align-items:center; width:100%; box-sizing:border-box; margin-bottom:12px;">
+                                <div style="flex:1;">
+                                <div style="margin-bottom:6px;">${durumStili}</div>
+                                <h4 style="margin:0; font-size:17px; color:#2d3436;">${etk.Etkinlik_Adi}</h4>
+                                <p style="margin:5px 0 0 0; font-size:13px; color:#7f8c8d;"><i class="fa-solid fa-location-dot"></i> ${etk.Mekan_Adi}</p>
+                                </div>
+                                <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+                                <span class="category-badge" style="background:rgba(9,132,227,0.1); color:#0984e3; font-weight:bold;">${etk.SatilanBilet || 0} / ${etk.Kapasite} Gişe</span>
+                                ${silmeButonu} 
+                                </div>
+                                </div>`;
+                            });
+                    }
+                    else if (data.rol === 'Mekan Sahibi') {
+                        avatar.style.background = "linear-gradient(135deg, #a55eea 0%, #6c5ce7 100%)";
+                        document.getElementById('profRolRozet').style.background = "rgba(108, 92, 231, 0.1)";
+                        document.getElementById('profRolRozet').style.color = "#6c5ce7";
+                        icon.className = "fa-solid fa-warehouse fa-2x";
+
+                        detayAlani.innerHTML = `
+                            <div class="event-info profile-info-line"><strong>Mülk Sahibi Sicili:</strong> ${data.bilgiler.Isletme_Turu}</div>
+                            <div class="event-info profile-info-line"><strong>Kapasite Ruhsatı:</strong> ${data.bilgiler.Sertifika_No}</div>`;
+                        
+                        finansalKart.style.background = 'linear-gradient(135deg, rgba(108, 92, 231, 0.15) 0%, rgba(108, 92, 231, 0.05) 100%)';
+                        document.getElementById('finansalBaslik').innerText = "YÖNETİLEN FİZİKSEL ALAN";
+                        document.getElementById('finansalDeger').innerText = "Mekan Paneli Aktif";
+
+                        document.getElementById('listeBaslik').innerText = "Organizatörlerden Gelen Mekan Kullanım Talepleri";
+                        document.getElementById('listeAciklama').innerText = "Mekan Sahibi Yetkisi: Gelen talepleri inceleyip onaylayın veya reddedin.";
+
+                        if (!data.liste || data.liste.length === 0) {
+                            anaListe.innerHTML = "<p style='color:#7f8c8d; font-style:italic;'>Şu anda onayınızı bekleyen herhangi bir kiralama talebi bulunmamaktadır.</p>";
+                            return;
+                        }
+
+                        data.liste.forEach(talep => {
+                            let durumRozeti = "";
+                            let butonAlani = "";
+                            let solCizgiRengi = "#ff9f43";
+
+                            if (talep.Onay_Durumu === 'Beklemede') {
+                                // Eğer mekan sahibinin hesabı askıdaysa butonları göstermez, engeller.
+                            if (data.bilgiler.Hesap_Durumu === 'Askıda') {
+                                butonAlani = `<div style="color:#7f8c8d; font-weight:700; font-size:12px; background:#f1f2f6; padding:6px; border-radius:6px;"><i class="fa-solid fa-lock"></i> Hesap Askıda (İşlem Yapılamaz)</div>`;
+                            } else {
+                                butonAlani = `
+                                <div style="display:flex; flex-direction:column; gap:8px;">
+                                <button onclick="mekanTalepAksiyon(${talep.Etkinlik_ID}, 'Onaylandı')" style="background:#2ed573; color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">Kabul Et</button>
+                                <button onclick="mekanTalepAksiyon(${talep.Etkinlik_ID}, 'Reddedildi')" style="background:#ff7675; color:white; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">Reddet</button>
+                                </div>`;
+                            }
+                            } else if (talep.Onay_Durumu === 'Onaylandı') {
+                                durumRozeti = `<span class="category-badge" style="background:rgba(46,213,115,0.1); color:#2ed573; font-weight:bold;">✅ Onaylandı</span>`;
+                                solCizgiRengi = "#2ed573";
+                                butonAlani = `<div style="color:#2ed573; font-weight:800; font-size:13px;"><i class="fa-solid fa-check-double"></i> Süreç Onaylandı</div>`;
+                            } else {
+                                durumRozeti = `<span class="category-badge" style="background:rgba(234,84,85,0.1); color:#ff4141; font-weight:bold;">❌ Reddedildi</span>`;
+                                solCizgiRengi = "#ff7675";
+                                butonAlani = `<div style="color:#ff7675; font-weight:800; font-size:13px;"><i class="fa-solid fa-ban"></i> Talep Reddedildi</div>`;
+                            }
+
+                            anaListe.innerHTML += `
+                                <div class="event-card data-card-modern" style="display:flex; align-items:center; width:100%; box-sizing:border-box; gap:20px; border-left: 5px solid ${solCizgiRengi}; margin-bottom: 15px;">
+                                    <div style="flex:1;">
+                                        <div style="margin-bottom:6px;">${durumRozeti}</div>
+                                        <h4 style="margin:0; font-size:17px; color:#2d3436;">${talep.Etkinlik_Adi}</h4>
+                                        <p style="margin:5px 0 0 0; font-size:13px; color:#7f8c8d;"><i class="fa-solid fa-building"></i> Kategori: ${talep.Etkinlik_Kategori} | Salon: ${talep.Mekan_Adi}</p>
+                                        <p style="margin:3px 0 0 0; font-size:12px; color:#6c5ce7; font-weight:700;"><i class="fa-regular fa-clock"></i> Zaman: ${talep.Baslangic_Zamani}</p>
+                                    </div>
+                                    ${butonAlani}
+                                </div>`;
+                        });
+                    }
+                    else if (data.rol === 'Admin') {
+                        avatar.style.background = "linear-gradient(135deg, #636e72 0%, #2d3436 100%)";
+                        document.getElementById('profRolRozet').style.background = "rgba(45, 52, 54, 0.1)";
+                        document.getElementById('profRolRozet').style.color = "#2d3436";
+                        icon.className = "fa-solid fa-user-shield fa-2x";
+
+                        detayAlani.innerHTML = `
+                            <div class="event-info profile-info-line"><strong>Güvenlik Standardı:</strong> Tam Yetkili Sorumlu</div>
+                            <div class="event-info profile-info-line"><strong>Moderatör Kodu:</strong> #AD-LEVEL-5</div>`;
+
+                        finansalKart.style.background = 'linear-gradient(135deg, rgba(45, 52, 54, 0.15) 0%, rgba(45, 52, 54, 0.05) 100%)';
+                        document.getElementById('finansalBaslik').innerText = "DENETİM DEPARTMAN KODU";
+                        document.getElementById('finansalDeger').innerText = "LV-05";
+
+                        document.getElementById('listeBaslik').innerText = "Admin Moderasyon, Yorum Onay ve Hesap Denetim Masası";
+                        document.getElementById('listeAciklama').innerText = "Kural: Askıya alma ve yorum moderasyon departmanı.";
+
+                        anaListe.innerHTML = `<h3 style="grid-column:1/-1; color:#2d3436; margin-bottom:5px;"><i class="fa-solid fa-comments"></i> Sistemdeki Kullanıcı Yorumları ve Onay Geçmişi</h3>`;
+                        if(!data.liste || data.liste.length === 0) {
+                            anaListe.innerHTML += "<p style='color:#2ed573; font-style:italic; grid-column:1/-1;'>Onay sırası temiz.</p>";
+                        } else {
+                            data.liste.forEach(y => {
+                                let yRozet = "";
+                                let yButonlar = "";
+                                
+                                if (y.Onay_Durumu === 'Beklemede') {
+                                    yRozet = `<span class="category-badge" style="background:#ffeaa7; color:#d35400;">⏳ Onay Bekliyor</span>`;
+                                    yButonlar = `
+                                        <button onclick="yorumModerasyon(${y.Yorum_ID}, 'onayla')" style="background:#2ed573; color:white; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer;">Kabul Et (Onayla)</button>
+                                        <button onclick="yorumModerasyon(${y.Yorum_ID}, 'sil')" style="background:#ff7675; color:white; border:none; padding:6px 12px; border-radius:6px; font-weight:bold; cursor:pointer;">Reddet</button>`;
+                                } else if (y.Onay_Durumu === 'Onaylandı') {
+                                    yRozet = `<span class="category-badge" style="background:rgba(46,213,115,0.1); color:#2ed573;">✅ Yayında</span>`;
+                                    yButonlar = `<span style="color:#2ed573; font-size:12px; font-weight:700;"><i class="fa-solid fa-check"></i> Onaylandı</span>`;
+                                } else {
+                                    yRozet = `<span class="category-badge" style="background:rgba(234,84,85,0.1); color:#ff4141;">❌ Gizlendi</span>`;
+                                    yButonlar = `<span style="color:#ff4141; font-size:12px; font-weight:700;"><i class="fa-solid fa-ban"></i> Reddedildi</span>`;
+                                }
+
+                                anaListe.innerHTML += `
+                                    <div class="event-card data-card-modern" style="display:flex; align-items:center; width:100%; box-sizing:border-box; gap:20px; margin-bottom:12px;">
+                                        <div style="flex:1;">
+                                            <div style="margin-bottom:6px;">${yRozet} <strong style="font-size:12px; color:#6c5ce7; margin-left:8px;">Etkinlik Adı: ${y.Etkinlik_Adi}</strong></div>
+                                            <p style="margin:4px 0 0 0; font-style:italic;">"${y.Icerik}"</p>
+                                            <small style="color:#7f8c8d; display:block; margin-top:4px;">Yazan Katılımcı: ${y.KatilimciAdi || 'Biletli Kullanıcı'}</small>
+                                        </div>
+                                        <div style="display:flex; flex-direction:column; gap:8px; text-align:right;">
+                                            ${yButonlar}
+                                        </div>
+                                    </div>`;
+                            });
+                        }
+
+                        anaListe.innerHTML += `<h3 style="grid-column:1/-1; color:#2d3436; margin-top:25px; margin-bottom:5px;"><i class="fa-solid fa-users-gear"></i> Sistemdeki Kullanıcı Hesapları ve Denetim Durumları</h3>`;
+                        data.kullanicilar.forEach(u => {
+                            let butonRenk = u.Hesap_Durumu === 'Aktif' ? '#ff7675' : '#2ed573';
+                            let butonMetin = u.Hesap_Durumu === 'Aktif' ? 'Hesabı Askıya Al' : 'Askıdan Kaldır (Aktif Et)';
+                            let hotelDurum = u.Hesap_Durumu === 'Aktif' ? 'Askıda' : 'Aktif';
+
+                            anaListe.innerHTML += `
+                                <div class="event-card data-card-modern" style="display:flex; align-items:center; width:100%; box-sizing:border-box;">
+                                    <div style="flex:1;">
+                                        <h5 style="margin:0; font-size:15px;">${u.Ad_Soyad} (ID: ${u.Kullanici_ID})</h5>
+                                        <p style="margin:4px 0 0 0; font-size:12px; color:#7f8c8d;">Mevcut Durum: <strong>${u.Hesap_Durumu}</strong></p>
+                                    </div>
+                                    <button onclick="hesapDurumuGuncelle(${u.Kullanici_ID}, '${hotelDurum}')" style="background:${butonRenk}; color:white; border:none; padding:8px 12px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">${butonMetin}</button>
+                                </div>`;
+                        });
+                    }
+                });
+        });
+
+        // Profil sayfasından takibi bırakmayı sağlayan fonksiyon
+        function takipAksiyon(hedefID, hedefTuru, eylem) {
+            const katilimciID = new URLSearchParams(window.location.search).get('id');
+            const url = eylem === 'et' ? '/api/takip-et' : '/api/takip-birak';
+    
+            fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ katilimciID, hedefID, hedefTuru })
+            })
+            .then(res => res.json())
+            .then(data => {
+            alert(data.mesaj);
+            window.location.reload(); // İşlem bitince sayfayı yeniler ve kart listeden düşer
+            })
+            .catch(err => {
+                console.error("Takip aksiyon hatası:", err);
+                alert("Bağlantı hatası oluştu.");
+            });
+        }
+
+        function biletIptalEt(biletID) {
+            if (!confirm("Bileti iptal etmek istiyor musunuz? Para cüzdanınıza dönecek ve kontenjan açılacaktır.")) return;
+            fetch('/api/bilet-iptal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ biletID: biletID })
+            }).then(res => res.json()).then(data => { alert(data.mesaj); window.location.reload(); });
+        }
+
+        function bakiyeGonder() {
+            const gonderenID = new URLSearchParams(window.location.search).get('id');
+            const aliciEposta = document.getElementById('transferEposta').value;
+            const miktar = document.getElementById('transferMiktar').value;
+            if(!aliciEposta || !miktar) { alert("Lütfen alıcı og miktar alanlarını doldurun!"); return; }
+
+            fetch('/api/bakiye-transfer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ gonderenID, aliciEposta, miktar })
+            }).then(res => res.json()).then(data => { alert(data.mesaj); window.location.reload(); });
+        }
+
+       function kaydetYeniEtkinlik() {
+            const orgID = new URLSearchParams(window.location.search).get('id');
+            const ad = document.getElementById('formEtkAd').value;
+            const kategori = document.getElementById('formEtkKat').value;
+            const zaman = document.getElementById('formEtkZaman').value;
+            const mekanID = document.getElementById('formEtkMekan').value;
+            const aciklama = document.getElementById('formEtkAciklama').value;
+            
+            // İster formEtkFiyat olsun ister placeholder, değeri her iki ihtimalle de arar.
+            const fiyatInput = document.getElementById('formEtkFiyat') || document.querySelector('input[placeholder*="Fiyat"]');
+            const girilenFiyat = fiyatInput ? fiyatInput.value : null;
+
+            if(!ad || !zaman || !aciklama || !girilenFiyat) { 
+                alert("Lütfen bilet fiyatı dahil tüm alanları doldurunuz!"); 
+                return; 
+            }
+
+            fetch('/api/etkinlik-ekle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                //  Backend'deki asilFiyat'ın (fiyat || biletFiyati) algılayabilmesi için iki ismi de gönderir.
+                body: JSON.stringify({ 
+                    ad, 
+                    kategori, 
+                    aciklama, 
+                    zaman, 
+                    mekanID, 
+                    organizatorID: orgID, 
+                    fiyat: girilenFiyat,
+                    biletFiyati: girilenFiyat 
+                })
+            })
+            .then(res => res.json())
+            .then(data => { 
+                alert(data.mesaj); 
+                window.location.reload(); 
+            })
+            .catch(err => alert("Bağlantı hatası oluştu."));
+        }
+
+        function yorumModerasyon(yorumID, aksiyon) {
+            fetch('/api/yorum-moderasyon', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ yorumID, aksiyon })
+            }).then(res => res.json()).then(data => { alert(data.mesaj); window.location.reload(); });
+        }
+
+      function hesapDurumuGuncelle(hedefKullaniciID, yeniDurum) {
+    // Yeni durumun tam olarak 'Askıda' veya 'Aktif' olduğunu garanti ediyoruz
+    const durum = yeniDurum.trim();
+    
+    fetch('/api/hesap-durumu-guncelle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            hedefKullaniciID: hedefKullaniciID, 
+            yeniDurum: durum 
+        })
+    })
+    .then(res => res.json())
+    .then(data => { 
+        alert(data.mesaj); 
+        window.location.reload(); 
+    })
+    .catch(err => {
+        console.error("Güncelleme hatası:", err);
+        alert("Bağlantı hatası oluştu.");
+    });
+}
+
+        function mekanTalepAksiyon(etkinlikID, aksiyon) {
+            if (!confirm(`Bu etkinlik kiralama talebini '${aksiyon}' olarak işaretlemek istediğinize emin misiniz?`)) {
+                return;
+            }
+
+            fetch('/api/mekan-talep-moderasyon', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ etkinlikID: etkinlikID, aksiyon: aksiyon })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.basarili) {
+                    alert("🎉 " + data.mesaj);
+                    window.location.reload();
+                } else {
+                    alert("Hata: " + data.mesaj);
+                }
+            });
+        }
+
+        function etkinlikSil(etkinlikID) {
+            if (!confirm("Bu etkinliği sistemden tamamen silmek istediğinize emin misiniz? Bu işlem geri alınamaz ve bu etkinliğe ait tüm biletler de temizlenir!")) {
+                return;
+            }
+
+            fetch('/api/etkinlik-sil', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ etkinlikID: etkinlikID })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.basarili) {
+                    alert("🎉 " + data.mesaj);
+                    window.location.reload(); 
+                } else {
+                    alert("❌ Silme işlemi başarısız: " + data.mesaj);
+                }
+            })
+            .catch(err => {
+                console.error("Etkinlik silme hatası:", err);
+                alert("Bağlantı hatası oluştu.");
+            });
+        }
+    </script>
+</body>
+</html>

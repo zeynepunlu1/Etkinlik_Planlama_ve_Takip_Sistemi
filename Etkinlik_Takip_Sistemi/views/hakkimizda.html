@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda - SYNAPZ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+
+    <header class="header"> 
+        <a href="index.html" class="logo">
+            <i class="fa-regular fa-calendar-check"></i> SYNAPZ
+        </a>
+        <nav class="navbar">
+            <a href="index.html">Anasayfa</a>
+            <a href="etkinlikler.html">Etkinlikler</a>
+            <a href="hakkimizda.html" class="active">Hakkımızda</a>
+            <a href="iletisim.html">İletişim</a>
+        </nav>
+        <div class="header-action">
+            <a href="giris_kayit.html" id="girisLink" class="nav-btn">Giriş Yap/Kaydol</a>
+        </div>
+    </header>
+
+    <section class="hakkimizda-sayfasi">
+        <div class="hakkimizda-container">
+            
+            <div class="hakkimizda-giriş-yeni">
+                
+                <div class="hakkimizda-gorsel-kutusu">
+                    <img src="public/images/hakkımızda.jpeg" alt="SYNAPZ Etkinlik">
+                </div>
+
+                <div class="hakkimizda-yazi-kutusu">
+                    <h3>Biz Kimiz? </h3>
+                    <p class="vurgulu-yazi">
+                        SYNAPZ, şehirdeki tüm eğlence, kültür, sanat ve kampüs ritmini tek bir merkezde toplamak amacıyla geliştirilmiş dinamik bir etkinlik takip ve biletleme platformudur. 
+                    </p>
+                    <p class="ek-yazi">
+                        Şehirdeki en canlı anları, en popüler konserleri ve kaçırmak istemediğiniz tiyatroları tek tıkla önünüze sererek, sosyal hayatınızı kusursuz bir şekilde planlamanızı sağlıyoruz. Planını yap, anın keyfini çıkar!
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="hakkimizda-kartlar">
+                
+                <div class="hakkimizda-kart">
+                    <div class="kart-ikon-çemberi misyon-renk">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h4>Misyonumuz</h4>
+                    <p>Katılımcıların hayalindeki etkinliklere ve biletlere en hızlı, en güvenli şekilde ulaşmasını sağlamak; kültür-sanat ekosistemini herkes için daha erişilebilir kılmak.</p>
+                </div>
+
+                <div class="hakkimizda-kart">
+                    <div class="kart-ikon-çemberi vizyon-renk">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h4>Vizyonumuz</h4>
+                    <p>Yenilikçi veritabanı altyapımız ve kullanıcı dostu arayüzümüzle, Türkiye'nin en çok tercih edilen ve topluluk odaklı çalışan lider dijital etkinlik platformu olmak.</p>
+                </div>
+
+                <div class="hakkimizda-kart">
+                    <div class="kart-ikon-çemberi deger-renk">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h4>Değerlerimiz</h4>
+                    <p>Güvenilirlik, kesintisiz eğlence, şeffaf biletleme politikası ve topluluk bağlarını her şeyin önünde tutarak hem organizatörlere hem katılımcılara adil bir alan sunmak.</p>
+                </div>
+
+            </div>
+
+            <div class="hakkimizda-iletisim-bandi">
+                <div class="iletisim-bandi-icerik">
+                    <h4>Kafanıza takılan bir soru mu var? 🎯</h4>
+                    <p>Destek talepleri, iş ortaklıkları veya sadece merhaba demek için bize bir mesaj bırakın.</p>
+                </div>
+                <a href="iletisim.html" class="band-btn"> <!-- İletişim sayfasına yönlendirir -->
+                    Bizimle İletişime Geçin <i class="fa-solid fa-arrow-right-long"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+    <footer class="footer">
+        <p>&copy; 2026 Etkinlik Takip Sistemi. Tüm hakları saklıdır.</p>
+    </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const loggedInID = localStorage.getItem('synapz_user_id');
+        const loggedInName = localStorage.getItem('synapz_user_name');
+        
+        // Eğer hafızada bir kullanıcı ID'si varsa, "Giriş Yap/Kaydol" butonunu "Profilim" yap
+        if (loggedInID && loggedInName) {
+            // Sağ üstteki aksiyon alanını veya girisLink id'li butonu buluyoruz
+            const girisLink = document.getElementById('girisLink') || document.querySelector('.header-action a');
+            if (girisLink) {
+                const kısaIsim = loggedInName.split(' ')[0]; // Sadece ilk adı göster (Örn: Ahmet)
+                girisLink.innerHTML = `<i class="fa-solid fa-circle-user"></i> ${kısaIsim}`;
+                girisLink.href = `profil.html?id=${loggedInID}`;
+            }
+        }
+    });
+</script>
+</body>
+</html>
